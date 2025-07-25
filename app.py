@@ -72,19 +72,19 @@ url = 'https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-
 nyc_map = np.array(PIL.Image.open(urllib.request.urlopen(url)))
 
 def plot_on_map(params, BB, nyc_map, s=10, alpha=0.2):
-    fig, axs = plt.subplots(1, 1, figsize=(16,10))
+    fig, axs = plt.subplots(1, 2, figsize=(16,10))
 
     axs[0].scatter(params["pickup_longitude"], params["pickup_latitude"], zorder=1, alpha=alpha, c='red', s=s)
     axs[0].set_xlim((BB[0], BB[1]))
     axs[0].set_ylim((BB[2], BB[3]))
-    axs[0].set_title('Pickup locations')
+    axs[0].set_title('Pickup location')
     axs[0].imshow(nyc_map, zorder=0, extent=BB)
 
-    axs[0].scatter(params["dropoff_longitude"], params["dropoff_latitude"], zorder=1, alpha=alpha, c='blue', s=s)
-    axs[0].set_xlim((BB[0], BB[1]))
-    axs[0].set_ylim((BB[2], BB[3]))
-    axs[0].set_title('Dropoff locations')
-    axs[0].imshow(nyc_map, zorder=0, extent=BB)
+    axs[1].scatter(params["dropoff_longitude"], params["dropoff_latitude"], zorder=1, alpha=alpha, c='blue', s=s)
+    axs[1].set_xlim((BB[0], BB[1]))
+    axs[1].set_ylim((BB[2], BB[3]))
+    axs[1].set_title('Dropoff location')
+    axs[1].imshow(nyc_map, zorder=0, extent=BB)
 
     return fig
 
