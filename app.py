@@ -89,6 +89,6 @@ def plot_on_map(params, BB, nyc_map, s=10, alpha=0.2):
     return fig
 
 # Plot training data on map
-fig = plot_on_map(params, bounding_boxes, nyc_map, s=1, alpha=0.3)
+fig = plot_on_map(params, bounding_boxes, nyc_map, s=10, alpha=1)
 
 st.pyplot(fig)
