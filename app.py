@@ -75,9 +75,9 @@ def plot_on_map(params, BB, nyc_map, s=10, alpha=0.2):
     fig, ax = plt.subplots(1, 1, figsize=(16,10))
 
     ax.scatter(params["pickup_longitude"], params["pickup_latitude"], zorder=1, alpha=alpha, c='red', s=s)
-    ax.annotate("Pickup", (params["pickup_longitude"], params["pickup_latitude"]))
+    ax.annotate("Pickup", (params["pickup_longitude"], params["pickup_latitude"]), fontsize=15, color='red')
     ax.scatter(params["dropoff_longitude"], params["dropoff_latitude"], zorder=1, alpha=alpha, c='blue', s=s)
-    ax.annotate("Dropoff", (params["dropoff_longitude"], params["dropoff_latitude"]))
+    ax.annotate("Dropoff", (params["dropoff_longitude"], params["dropoff_latitude"]), fontsize=15, color='blue')
     ax.set_xlim((BB[0], BB[1]))
     ax.set_ylim((BB[2], BB[3]))
     ax.set_title('Pickup & Dropoff Locations')
