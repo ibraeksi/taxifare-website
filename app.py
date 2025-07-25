@@ -54,7 +54,41 @@ params = {"pickup_datetime":"2014-07-06 19:18:00", "pickup_longitude":-73.950655
 
 import requests
 import numpy as np
+import urllib
+import matplotlib.pyplot as plt
+import PIL
+from pathlib import Path
 
 response = requests.get(url, params=params).json()
 
 st.write("The predicted fare price: ", np.round(response['fare'],2), "$")
+
+
+# Let's check NYC bouding boxes
+# Load image of NYC map
+bounding_boxes = (-74.3, -73.7, 40.5, 40.9)
+
+url = 'https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/nyc_-74.3_-73.7_40.5_40.9.png'
+nyc_map = np.array(PIL.Image.open(urllib.request.urlopen(url)))
+
+def plot_on_map(params, BB, nyc_map, s=10, alpha=0.2):
+    fig, axs = plt.subplots(1, 1, figsize=(16,10))
+
+    axs[0].scatter(params["pickup_longitude"], params["pickup_latitude"], zorder=1, alpha=alpha, c='red', s=s)
+    axs[0].set_xlim((BB[0], BB[1]))
+    axs[0].set_ylim((BB[2], BB[3]))
+    axs[0].set_title('Pickup locations')
+    axs[0].imshow(nyc_map, zorder=0, extent=BB)
+
+    axs[0].scatter(params["dropoff_longitude"], params["dropoff_latitude"], zorder=1, alpha=alpha, c='blue', s=s)
+    axs[0].set_xlim((BB[0], BB[1]))
+    axs[0].set_ylim((BB[2], BB[3]))
+    axs[0].set_title('Dropoff locations')
+    axs[0].imshow(nyc_map, zorder=0, extent=BB)
+
+    return fig
+
+# Plot training data on map
+fig = plot_on_map(params, bounding_boxes, nyc_map, s=1, alpha=0.3)
+
+st.pyplot(fig)
